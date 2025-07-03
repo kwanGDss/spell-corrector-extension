@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "문장 교정기",
+  "version": "1.0",
+  "description": "입력한 문장을 GPT로 교정하는 확장 프로그램",
+  "permissions": ["scripting", "activeTab"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "icons/icon48.png"
+    }
+  }
+}
