@@ -24,7 +24,7 @@ def correct():
 
     try:
         response = model.generate_content(
-            f"입력 문장은 반드시 수정해. 틀렸든 아니든 무조건 다듬고 바꿔. 비슷하더라도 단어 하나라도 바꿔줘. 원본 그대로 돌려주는 건 절대 안 돼. 다음은 입력 문장이야: {input_text}",
+            f"다음 문장의 맞춤법, 문법, 구두점 오류만 교정해줘. 원문의 의미, 내용, 그리고 핵심 단어는 절대 변경하지 마. 문장을 재작성하거나 새로운 정보를 추가하지 마. 오직 교정된 문장만 반환해줘. 다음은 입력 문장이야: {input_text}",
             generation_config=genai.types.GenerationConfig(temperature=0.3)
         )
 
