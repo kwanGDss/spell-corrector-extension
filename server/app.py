@@ -2,15 +2,16 @@ import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
-from openai import OpenAI
+import google.generativeai as genai
 
 load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
-# OpenAI 클라이언트 생성 (API 키를 환경변수에서 가져옴)
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+# Gemini 클라이언트 생성 (API 키를 환경변수에서 가져옴)
+genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
+model = genai.GenerativeModel('gemini-1.5-flash')
 
 
 @app.route("/correct", methods=["POST"])
@@ -22,19 +23,12 @@ def correct():
         return jsonify({ "corrected": input_text })
 
     try:
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {
-                    "role": "system",
-                    "content": "입력 문장은 반드시 수정해. 틀렸든 아니든 무조건 다듬고 바꿔. 비슷하더라도 단어 하나라도 바꿔줘. 원본 그대로 돌려주는 건 절대 안 돼."
-                },
-                { "role": "user", "content": input_text }
-            ],
-            temperature=0.3
+        response = model.generate_content(
+            f"입력 문장은 반드시 수정해. 틀렸든 아니든 무조건 다듬고 바꿔. 비슷하더라도 단어 하나라도 바꿔줘. 원본 그대로 돌려주는 건 절대 안 돼. 다음은 입력 문장이야: {input_text}",
+            generation_config=genai.types.GenerationConfig(temperature=0.3)
         )
 
-        corrected = response.choices[0].message.content
+        corrected = response.text
         if corrected:
             corrected = corrected.strip()
         else:
@@ -45,7 +39,7 @@ def correct():
         return jsonify({ "corrected": corrected })
 
     except Exception as e:
-        print("❌ OpenAI 오류:", e)
+        print("❌ Gemini 오류:", e)
         return jsonify({ "corrected": input_text })
 
 
