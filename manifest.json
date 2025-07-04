@@ -3,18 +3,19 @@
   "name": "문장 교정기",
   "version": "1.0",
   "description": "입력한 문장을 GPT로 교정하는 확장 프로그램",
-  "permissions": ["scripting", "activeTab"],
-  "host_permissions": ["<all_urls>"],
+  "permissions": ["scripting", "activeTab", "storage", "tabs"],
+  "host_permissions": ["<all_urls>", "http://127.0.0.1:5000/"],
   "background": {
     "service_worker": "background.js"
   },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "run_at": "document_idle"
+  "commands": {
+    "correct_text": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S"
+      },
+      "description": "선택된 텍스트의 맞춤법을 교정합니다."
     }
-  ],
+  },
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
