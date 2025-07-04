@@ -1,20 +1,24 @@
-chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) = {
-  if (message.action === correct_text) {
-    try {
-      const res = await fetch(httplocalhost5000correct, {
-        method POST,
-        headers {
-          Content-Type applicationjson
-        },
-        body JSON.stringify({ text message.text })
-      });
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'correct_text') {
+    (async () => {
+      try {
+        const res = await fetch('http://127.0.0.1:5000/correct', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ text: message.text })
+        });
 
-      const data = await res.json();
-      sendResponse({ corrected data.corrected });
-    } catch (err) {
-      console.error(❌ API 요청 실패, err);
-      sendResponse({ corrected message.text });  실패 시 원문 유지
-    }
-    return true;  비동기 응답 허용
+        const data = await res.json();
+        console.log("🔁 서버 응답:", data);  // ✅ 여기에 응답 출력
+        sendResponse({ corrected: data.corrected });
+
+      } catch (err) {
+        console.error('❌ API 요청 실패:', err);
+        sendResponse({ corrected: message.text });
+      }
+    })();
+    return true;
   }
 });

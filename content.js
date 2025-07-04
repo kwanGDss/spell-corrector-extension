@@ -5,11 +5,24 @@ document.addEventListener('input', async (e) => {
   if (target && (target.tagName === "TEXTAREA" || target.tagName === "INPUT")) {
     const text = target.value;
 
-    // 디바운싱 생략한 기본 버전
-    chrome.runtime.sendMessage({ action: "correct_text", text: text }, (response) => {
-      if (response && response.corrected) {
-        target.value = response.corrected;
+    try {
+      if (typeof chrome !== 'undefined' &&
+          chrome.runtime &&
+          typeof chrome.runtime.sendMessage === 'function') {
+
+        chrome.runtime.sendMessage(
+          { action: "correct_text", text },
+          (response) => {
+            if (response && response.corrected) {
+              target.value = response.corrected;
+            }
+          }
+        );
+      } else {
+        console.warn("⚠️ chrome.runtime.sendMessage is not available.");
       }
-    });
+    } catch (err) {
+      console.error("❌ sendMessage 실패:", err);
+    }
   }
 });
