@@ -6,10 +6,10 @@
 
 ## 📌 주요 기능
 
-- ✅ textarea / input / contenteditable 영역의 입력 실시간 감지  
-- ✅ OpenAI GPT API를 통한 문맥 기반 문장 교정  
-- ✅ Flask 서버를 통해 안전하게 교정 처리  
-- ✅ Chrome 확장 형태로 어떤 웹사이트에서도 동작  
+- ✅ `Ctrl+Shift+S` 단축키를 통한 문맥 기반 문장 교정
+- ✅ Gemini API를 통한 문맥 기반 문장 교정
+- ✅ Flask 서버를 통해 안전하게 교정 처리
+- ✅ Chrome 확장 형태로 어떤 웹사이트에서도 동작
 - ✅ (선택) React 기반 popup UI 추가 예정
 
 ---
@@ -18,7 +18,6 @@
 
     spell-corrector-extension/
     ├── manifest.json        # 크롬 확장 메타 정보
-    ├── content.js           # 입력 감지 및 메시지 전송
     ├── background.js        # 서버와 통신 처리
     ├── popup.html           # 확장 아이콘 클릭 시 UI
     ├── icons/               # 확장 아이콘 이미지
@@ -46,6 +45,15 @@
 2. "개발자 모드" 활성화  
 3. "압축해제된 확장 프로그램 로드" 클릭  
 4. `spell-corrector-extension/` 폴더 선택
+
+---
+
+## 💡 사용법
+
+1.  텍스트를 입력할 수 있는 웹 페이지 (예: 검색창, 게시판, 이메일 작성 칸 등)로 이동합니다.
+2.  교정하고 싶은 텍스트를 입력합니다.
+3.  텍스트 입력 필드에 커서가 있는 상태에서 `Ctrl + Shift + S` 단축키를 누릅니다.
+4.  입력된 텍스트가 Gemini API를 통해 교정되어 자동으로 업데이트됩니다.
 
 ---
 
