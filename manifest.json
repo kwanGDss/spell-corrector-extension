@@ -4,7 +4,7 @@
   "version": "1.0",
   "description": "입력한 문장을 GPT로 교정하는 확장 프로그램",
   "permissions": ["scripting", "activeTab", "storage", "tabs"],
-  "host_permissions": ["<all_urls>", "http://127.0.0.1:5000/"],
+  "host_permissions": ["<all_urls>", "http://13.125.213.45:5000/"],
   "background": {
     "service_worker": "background.js"
   },

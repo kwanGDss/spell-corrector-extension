@@ -27,7 +27,7 @@ chrome.commands.onCommand.addListener((command) => {
 
           console.log("교정할 텍스트:", text);
 
-          fetch('http://127.0.0.1:5000/correct', {
+          fetch('http://13.125.213.45:5000/correct', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
